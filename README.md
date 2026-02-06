@@ -9,7 +9,8 @@ When a Firefly Framework module (or a downstream application) declares `fireflyf
 - **Dependency version alignment** across Spring Boot, Spring Cloud, database drivers, serialization libraries, resilience utilities, and testing frameworks.
 - **Plugin configuration** for compilation, testing, packaging, source/javadoc generation, and OpenAPI code generation.
 - **Annotation processor wiring** for Lombok, MapStruct, and Spring Boot Configuration Processor.
-- **Consistent compiler settings** targeting Java 21 with `-parameters` for reflection-friendly bytecode.
+- **Consistent compiler settings** targeting Java 25 (default, Java 21+ compatible) with `-parameters` for reflection-friendly bytecode.
+- **Java 21 backward compatibility** via `-Pjava21` Maven profile.
 
 ## Managed Versions
 
@@ -19,46 +20,46 @@ When a Firefly Framework module (or a downstream application) declares `fireflyf
 |---|---|
 | Spring Boot | 3.5.9 |
 | Spring Cloud | 2025.0.1 |
-| Java | 21 |
-| SpringDoc OpenAPI | 2.8.6 |
+| Java | 25 (default, 21+ compatible) |
+| SpringDoc OpenAPI | 2.8.15 |
 | Resilience4j | 2.3.0 |
 | MapStruct | 1.6.3 |
-| Lombok | 1.18.38 |
-| Logstash Logback Encoder | 8.0 |
+| Lombok | 1.18.42 |
+| Logstash Logback Encoder | 8.1 |
 
 ### Database
 
 | Dependency | Version |
 |---|---|
-| PostgreSQL Driver | 42.7.4 |
-| R2DBC PostgreSQL | 1.0.7.RELEASE |
-| Flyway | 10.22.0 |
+| PostgreSQL Driver | 42.7.8 |
+| R2DBC PostgreSQL | 1.0.9.RELEASE |
+| Flyway | 11.7.2 |
 
 ### Communication
 
 | Dependency | Version |
 |---|---|
-| gRPC | 1.68.2 |
-| Protobuf | 3.25.5 |
-| OpenAPI Generator | 7.10.0 |
-| Swagger Annotations | 2.2.30 |
+| gRPC | 1.79.0 |
+| Protobuf | 4.33.5 |
+| OpenAPI Generator | 7.19.0 |
+| Swagger Annotations | 2.2.42 |
 
 ### Cloud Providers
 
 | Dependency | Version |
 |---|---|
-| AWS SDK | 2.31.32 |
-| Spring Cloud AWS | 3.3.0 |
-| Spring Cloud Azure | 5.22.0 |
-| Spring Cloud GCP | 6.1.1 |
+| AWS SDK | 2.41.24 |
+| Spring Cloud AWS | 3.4.2 |
+| Spring Cloud Azure | 5.24.1 |
+| Spring Cloud GCP | 6.5.4 |
 
 ### Testing
 
 | Dependency | Version |
 |---|---|
-| Testcontainers | 1.20.4 |
-| Surefire Plugin | 3.5.2 |
-| Failsafe Plugin | 3.5.2 |
+| Testcontainers | 1.21.4 |
+| Surefire Plugin | 3.5.4 |
+| Failsafe Plugin | 3.5.4 |
 
 ## Usage
 
@@ -88,7 +89,7 @@ The parent POM configures the following plugins in `pluginManagement`:
 | Plugin | Purpose |
 |---|---|
 | `spring-boot-maven-plugin` | Packaging Spring Boot applications (excludes Lombok from fat JAR) |
-| `maven-compiler-plugin` | Java 21 compilation with Lombok + MapStruct + Spring Boot Configuration Processor |
+| `maven-compiler-plugin` | Java 25 (default) compilation with Lombok + MapStruct + Spring Boot Configuration Processor |
 | `maven-source-plugin` | Attaches source JARs to build artifacts |
 | `maven-javadoc-plugin` | Generates and attaches Javadoc JARs |
 | `maven-surefire-plugin` | Unit test execution |
