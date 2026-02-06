@@ -1,124 +1,103 @@
-# Firefly Library Parent POM
+# Firefly Framework - Parent POM
 
-This repository contains the parent POM for all Firefly platform libraries. It provides standardized dependency management, plugin configurations, and build processes to ensure consistency across all Firefly library projects.
+The parent POM for all Firefly Framework modules. It centralizes dependency management, plugin configuration, and build conventions so that individual modules inherit a consistent, production-ready baseline without duplicating configuration.
 
 ## Purpose
 
-The `lib-parent-pom` serves as a centralized configuration point for all Firefly libraries, offering:
+When a Firefly Framework module (or a downstream application) declares `fireflyframework-parent` as its parent, it inherits:
 
-- Consistent dependency versions
-- Standardized build processes
-- Common plugin configurations
-- Unified code quality standards
-- Streamlined deployment procedures
+- **Dependency version alignment** across Spring Boot, Spring Cloud, database drivers, serialization libraries, resilience utilities, and testing frameworks.
+- **Plugin configuration** for compilation, testing, packaging, source/javadoc generation, and OpenAPI code generation.
+- **Annotation processor wiring** for Lombok, MapStruct, and Spring Boot Configuration Processor.
+- **Consistent compiler settings** targeting Java 21 with `-parameters` for reflection-friendly bytecode.
 
-By using this parent POM, development teams can focus on implementing business logic rather than configuring build tools and managing dependencies.
+## Managed Versions
 
-## Requirements
+### Runtime
 
-- Java 21
-- Maven 3.8+
-- GitHub account with access to Firefly repositories
+| Dependency | Version |
+|---|---|
+| Spring Boot | 3.5.9 |
+| Spring Cloud | 2025.0.1 |
+| Java | 21 |
+| SpringDoc OpenAPI | 2.8.6 |
+| Resilience4j | 2.3.0 |
+| MapStruct | 1.6.3 |
+| Lombok | 1.18.38 |
+| Logstash Logback Encoder | 8.0 |
+
+### Database
+
+| Dependency | Version |
+|---|---|
+| PostgreSQL Driver | 42.7.4 |
+| R2DBC PostgreSQL | 1.0.7.RELEASE |
+| Flyway | 10.22.0 |
+
+### Communication
+
+| Dependency | Version |
+|---|---|
+| gRPC | 1.68.2 |
+| Protobuf | 3.25.5 |
+| OpenAPI Generator | 7.10.0 |
+| Swagger Annotations | 2.2.30 |
+
+### Cloud Providers
+
+| Dependency | Version |
+|---|---|
+| AWS SDK | 2.31.32 |
+| Spring Cloud AWS | 3.3.0 |
+| Spring Cloud Azure | 5.22.0 |
+| Spring Cloud GCP | 6.1.1 |
+
+### Testing
+
+| Dependency | Version |
+|---|---|
+| Testcontainers | 1.20.4 |
+| Surefire Plugin | 3.5.2 |
+| Failsafe Plugin | 3.5.2 |
 
 ## Usage
 
-### Adding as Parent to Your Project
+### As a Parent POM (Recommended)
 
-To use this parent POM in your library project, add the following to your `pom.xml`:
+Declare `fireflyframework-parent` as the parent of your module or application:
 
 ```xml
 <parent>
-    <groupId>com.firefly</groupId>
-    <artifactId>lib-parent-pom</artifactId>
+    <groupId>org.fireflyframework</groupId>
+    <artifactId>fireflyframework-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <relativePath/>
 </parent>
 ```
 
-### Inheriting Managed Dependencies
+This gives your project all managed dependency versions, plugin configurations, and annotation processor wiring out of the box.
 
-The parent POM provides dependency management for commonly used libraries. To use a managed dependency, simply declare it in your project's `dependencies` section without specifying the version:
+### If You Already Have a Parent
 
-```xml
-<dependencies>
-    <!-- Spring Boot Starter -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-webflux</artifactId>
-    </dependency>
+If your project already has a different parent POM and cannot inherit from `fireflyframework-parent`, use the [fireflyframework-bom](https://github.com/fireflyframework/fireflyframework-bom) instead for dependency version management.
 
-    <!-- Other dependencies -->
-</dependencies>
-```
+## Plugin Configuration
 
-## Key Features
+The parent POM configures the following plugins in `pluginManagement`:
 
-### Spring Boot and Spring Cloud Integration
+| Plugin | Purpose |
+|---|---|
+| `spring-boot-maven-plugin` | Packaging Spring Boot applications (excludes Lombok from fat JAR) |
+| `maven-compiler-plugin` | Java 21 compilation with Lombok + MapStruct + Spring Boot Configuration Processor |
+| `maven-source-plugin` | Attaches source JARs to build artifacts |
+| `maven-javadoc-plugin` | Generates and attaches Javadoc JARs |
+| `maven-surefire-plugin` | Unit test execution |
+| `maven-failsafe-plugin` | Integration test execution |
+| `openapi-generator-maven-plugin` | Server/client code generation from OpenAPI specifications |
+| `maven-deploy-plugin` | Artifact deployment to Maven repositories |
 
-The parent POM includes Spring Boot 3.2.2 and Spring Cloud 2023.0.0, providing a solid foundation for building microservices.
+## License
 
-### Database Support
+Apache License 2.0
 
-Built-in support for:
-- PostgreSQL (JDBC and R2DBC)
-- Flyway for database migrations
-
-### API Documentation
-
-OpenAPI/Swagger integration for API documentation with standardized configuration.
-
-### Development Tools
-
-- Lombok for reducing boilerplate code
-- MapStruct for object mapping
-- Standardized annotation processor configuration
-
-### Testing Framework
-
-Comprehensive testing support with:
-- JUnit Jupiter
-- Mockito
-- Testcontainers for integration testing
-
-## Configuration Options
-
-### OpenAPI Configuration
-
-The parent POM provides default OpenAPI configuration properties:
-
-```properties
-openapi.skip.validate=false
-openapi.use.tags=true
-openapi.use.optional=true
-openapi.date.library=java8
-```
-
-### Project Structure
-
-Default package structure is configured as:
-
-```properties
-base.package=com.firefly
-openapi.base.package=${base.package}.${project.artifactId}
-openapi.model.package=${openapi.base.package}.interfaces.dto
-openapi.api.package=${openapi.base.package}.interfaces.api
-```
-
-## Build and Deployment
-
-The parent POM configures the following build and deployment processes:
-
-### Source and Javadoc Attachment
-
-Source and Javadoc JARs are automatically generated and attached to the build artifacts.
-
-### GitHub Packages Deployment
-
-The project is configured to deploy to GitHub Packages. The CI/CD workflow is defined in `.github/workflows/publish.yml`.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Create a new Pull Request
+Copyright 2024-2026 Firefly Software Solutions Inc.
