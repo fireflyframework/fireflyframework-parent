@@ -39,7 +39,7 @@
         <!-- Database -->
         <postgresql.version>42.7.8</postgresql.version>
         <r2dbc-postgresql.version>1.0.9.RELEASE</r2dbc-postgresql.version>
-        <flyway.version>11.7.2</flyway.version>
+<flyway.version>11.20.3</flyway.version>
 
         <!-- OpenAPI -->
         <openapi-generator.version>7.19.0</openapi-generator.version>
