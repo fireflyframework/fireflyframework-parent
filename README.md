@@ -18,7 +18,7 @@ When a Firefly Framework module (or a downstream application) declares `fireflyf
 
 | Dependency | Version |
 |---|---|
-| Spring Boot | 3.5.9 |
+| Spring Boot | 3.5.10 |
 | Spring Cloud | 2025.0.1 |
 | Java | 25 (default, 21+ compatible) |
 | SpringDoc OpenAPI | 2.8.15 |
