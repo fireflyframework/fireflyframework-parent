@@ -1,5 +1,7 @@
 # Firefly Framework - Parent POM
 
+[![CI](https://github.com/fireflyframework/fireflyframework-parent/actions/workflows/ci.yml/badge.svg)](https://github.com/fireflyframework/fireflyframework-parent/actions/workflows/ci.yml)
+
 The parent POM for all Firefly Framework modules. It centralizes dependency management, plugin configuration, and build conventions so that individual modules inherit a consistent, production-ready baseline without duplicating configuration.
 
 ## Purpose
