@@ -11,6 +11,17 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    ignore:
+      # Strategic dependencies — upgrade manually to ensure cross-module compatibility
+      - dependency-name: "org.springframework.boot:*"
+      - dependency-name: "org.springframework.cloud:*"
+      - dependency-name: "org.springframework.cloud:spring-cloud-dependencies"
+      - dependency-name: "io.grpc:*"
+      - dependency-name: "com.google.protobuf:*"
+      - dependency-name: "software.amazon.awssdk:*"
+      - dependency-name: "io.awspring.cloud:*"
+      - dependency-name: "com.azure.spring:*"
+      - dependency-name: "com.google.cloud:*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
