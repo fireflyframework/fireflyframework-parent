@@ -6,7 +6,7 @@
 
     <groupId>org.fireflyframework</groupId>
     <artifactId>fireflyframework-parent</artifactId>
-    <version>26.02.02</version>
+    <version>26.02.03</version>
     <packaging>pom</packaging>
 
     <name>Firefly Framework - Parent POM</name>
@@ -653,7 +653,7 @@
                         <configuration>
                             <publishingServerId>central</publishingServerId>
                             <autoPublish>true</autoPublish>
-                            <waitUntil>uploaded</waitUntil>
+                            <waitUntil>published</waitUntil>
                             <checksums>required</checksums>
                         </configuration>
                     </plugin>
