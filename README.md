@@ -89,7 +89,7 @@ Use this as a parent POM in your Firefly Framework module:
 <parent>
     <groupId>org.fireflyframework</groupId>
     <artifactId>fireflyframework-parent</artifactId>
-    <version>26.02.06</version>
+    <version>26.02.07</version>
     <relativePath/>
 </parent>
 ```
@@ -108,7 +108,7 @@ Create a new Firefly Framework module by referencing the parent POM:
     <parent>
         <groupId>org.fireflyframework</groupId>
         <artifactId>fireflyframework-parent</artifactId>
-        <version>26.02.06</version>
+        <version>26.02.07</version>
         <relativePath/>
     </parent>
 
