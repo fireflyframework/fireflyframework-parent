@@ -6,7 +6,7 @@
 
     <groupId>org.fireflyframework</groupId>
     <artifactId>fireflyframework-parent</artifactId>
-    <version>26.05.06</version>
+    <version>26.05.07</version>
     <packaging>pom</packaging>
 
     <name>Firefly Framework - Parent POM</name>
