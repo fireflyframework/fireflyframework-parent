@@ -6,7 +6,7 @@
 
     <groupId>org.fireflyframework</groupId>
     <artifactId>fireflyframework-parent</artifactId>
-    <version>26.05.05</version>
+    <version>26.05.07</version>
     <packaging>pom</packaging>
 
     <name>Firefly Framework - Parent POM</name>
@@ -22,9 +22,9 @@
     </licenses>
     <developers>
         <developer>
-            <name>Firefly Software Solutions Inc</name>
+            <name>Firefly Software Foundation</name>
             <email>dev@fireflyframework.org</email>
-            <organization>Firefly Software Solutions Inc</organization>
+            <organization>Firefly Software Foundation</organization>
             <organizationUrl>https://fireflyframework.org</organizationUrl>
         </developer>
     </developers>
