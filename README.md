@@ -3,9 +3,9 @@
 [![CI](https://github.com/fireflyframework/fireflyframework-parent/actions/workflows/ci.yml/badge.svg)](https://github.com/fireflyframework/fireflyframework-parent/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Java](https://img.shields.io/badge/Java-21%2B-orange.svg)](https://openjdk.org)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.x-green.svg)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green.svg)](https://spring.io/projects/spring-boot)
 
-> Parent POM for the Firefly Framework providing centralized dependency management, plugin configuration, and build standards for all framework modules.
+> Parent POM for the Firefly Framework providing centralized dependency management, plugin configuration, and build standards inherited by every framework module.
 
 ---
 
@@ -22,16 +22,19 @@
 - [Build Profiles](#build-profiles)
 - [Native Image Builds](#native-image-builds)
 - [SBOM Generation](#sbom-generation)
+- [Documentation](#documentation)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
 
-The Firefly Framework Parent POM serves as the foundational build configuration for all Firefly Framework modules. It centralizes dependency version management, plugin configurations, and build standards to ensure consistency across the entire framework ecosystem.
+The Firefly Framework Parent POM (`org.fireflyframework:fireflyframework-parent`) is the foundational build artifact of the Firefly Framework — a Spring Boot superset providing CQRS, event-driven architecture, a transactional/saga engine, caching, and more. It is the single point of truth for dependency versions, plugin configuration, and build standards inherited by every framework module and downstream microservice.
 
-By inheriting from this parent POM, all Firefly modules automatically receive managed versions for Spring Boot 3.5.x, Spring Cloud 2025.0.x, database drivers, mapping libraries, testing frameworks, and build plugins. This eliminates version conflicts and simplifies dependency management across the framework.
+By declaring this artifact as their Maven `<parent>`, Firefly modules and applications automatically receive aligned, conflict-free versions for Spring Boot 3.5.x, Spring Cloud 2025.0.x, reactive (R2DBC) and JDBC database drivers, mapping and serialization libraries, gRPC/Protobuf, OpenTelemetry, the major cloud SDKs (AWS, Azure, GCP), SOAP/WS stacks, and testing frameworks — plus ready-to-use build plugins. This removes per-module version bookkeeping and guarantees the whole ecosystem builds against one coherent dependency graph.
 
-The parent POM also configures annotation processors for Lombok, MapStruct, and Spring Boot Configuration Processor, along with Maven Enforcer rules requiring JDK 21+.
+Beyond version management, the parent wires the compiler annotation-processor chain (Lombok, MapStruct, the Lombok-MapStruct binding, and the Spring Boot Configuration Processor), enables runtime-visible method parameter names (`-parameters`), and enforces a JDK 21+ floor via the Maven Enforcer plugin. It defaults to Java 25 with a `-Pjava21` profile for backward compatibility, and ships opt-in profiles for GraalVM native images, source/Javadoc release artifacts, and Maven Central publishing.
+
+This is a pure build-infrastructure POM (`<packaging>pom</packaging>`): it has no Java source, no submodules, and no Spring auto-configuration. It is a parent to inherit, not a dependency to add. Modules that need framework capabilities (caching, EDA, CQRS, orchestration, etc.) inherit this parent and then declare the relevant Firefly module dependencies, whose versions are themselves governed here.
 
 ## Features
 
@@ -76,20 +79,21 @@ The parent POM also configures annotation processors for Lombok, MapStruct, and 
 
 ## Requirements
 
-- Java 21+
+- Java 21+ (Java 25 recommended; build defaults to 25, use `-Pjava21` for 21)
+- Spring Boot 3.x (3.5.x is managed here)
 - Maven 3.9+
-- Docker (for native image container builds with Paketo)
-- GraalVM (for local native image builds, optional)
+- Docker (optional — for native image container builds with Paketo Buildpacks)
+- GraalVM (optional — for local native image builds)
 
 ## Installation
 
-Use this as a parent POM in your Firefly Framework module:
+Declare this as the `<parent>` of your Firefly Framework module or application. Pin it to the latest released version (see the [GitHub releases](https://github.com/fireflyframework/fireflyframework-parent/releases)); use `<relativePath/>` so Maven resolves it from your repository rather than the local filesystem:
 
 ```xml
 <parent>
     <groupId>org.fireflyframework</groupId>
     <artifactId>fireflyframework-parent</artifactId>
-    <version>26.02.07</version>
+    <version>26.05.08</version>
     <relativePath/>
 </parent>
 ```
@@ -108,7 +112,7 @@ Create a new Firefly Framework module by referencing the parent POM:
     <parent>
         <groupId>org.fireflyframework</groupId>
         <artifactId>fireflyframework-parent</artifactId>
-        <version>26.02.07</version>
+        <version>26.05.08</version>
         <relativePath/>
     </parent>
 
@@ -303,6 +307,12 @@ The SBOM is then available at `GET /actuator/sbom/application`.
 |-------|------|----------|
 | Application | CycloneDX Maven Plugin | Maven dependencies, transitive deps, licenses |
 | Container | Paketo Buildpacks | OS packages, JDK runtime, buildpack components |
+
+## Documentation
+
+- [Firefly Framework on GitHub](https://github.com/fireflyframework) — the full module catalog and sibling repositories that inherit this parent
+- [AOT / Native Image Design](docs/plans/2026-02-19-aot-native-image-design.md) — design notes for the `native` profile in this repo
+- Release versions and changelogs: [GitHub releases](https://github.com/fireflyframework/fireflyframework-parent/releases)
 
 ## Contributing
 
