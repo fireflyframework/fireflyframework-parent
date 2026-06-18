@@ -508,11 +508,6 @@
             </dependency>
             <dependency>
                 <groupId>org.fireflyframework</groupId>
-                <artifactId>fireflyframework-security-autoconfigure</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.fireflyframework</groupId>
                 <artifactId>fireflyframework-security-test</artifactId>
                 <version>${project.version}</version>
             </dependency>
